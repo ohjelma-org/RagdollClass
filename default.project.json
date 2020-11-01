@@ -7,23 +7,6 @@
 		"RagdollClass": {
 			"$path": "src/RagdollClass"
 		}
-	},
-
-	"StarterPlayer": {
-		"$className": "StarterPlayer",
-		"StarterPlayerScripts": {
-			"$className": "StarterPlayerScripts",
-			"ClientRagdollLoader": {
-				"$path": "src/ClientRagdollLoader.client.lua"
-			}
-		}
-	},
-
-	"ServerScriptService": {
-		"$className": "ServerScriptService",
-		"ServerRagdollLoader": {
-			"$path": "src/ServerRagdollLoader.server.lua"
-		}
 	}
   }
 }
