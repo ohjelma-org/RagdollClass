@@ -16,11 +16,11 @@ toggleRagdoll.OnServerEvent:Connect(function(player)
 	-- If it is, then it means that they are in the ragdoll state and we destroy the ragdoll and stop the code from continuing.
 	local ragdoll = ragdolls[player]
 	if ragdoll then
-		if ragdoll.Character ~= player.Character then
+		if ragdoll.Character ~= character then
 			ragdoll:Destroy()
 
 			ragdolls[player] = nil
-		elseif ragdoll then
+		else
 			ragdoll:Disable()
 			ragdoll:Destroy()
 
@@ -30,9 +30,8 @@ toggleRagdoll.OnServerEvent:Connect(function(player)
 	end
 
 	-- Create a new ragdoll
-	ragdoll = RagdollClass.new(player.Character)
+	ragdoll = RagdollClass.new(character)
 	-- Enable it
 	ragdoll:Enable()
-
 	ragdolls[player] = ragdoll
 end)
