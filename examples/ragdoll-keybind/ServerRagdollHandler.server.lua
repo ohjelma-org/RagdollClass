@@ -33,4 +33,6 @@ toggleRagdoll.OnServerEvent:Connect(function(player)
 	ragdoll = RagdollClass.new(player.Character)
 	-- Enable it
 	ragdoll:Enable()
+
+	ragdolls[player] = ragdoll
 end)
