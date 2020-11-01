@@ -70,7 +70,6 @@ local RAGDOLL_SETTINGS = {
 			["ConstraintSettings"] = {
 				["Shoulder"] = {
 					Attachment1 = "Torso>Shoulder",
-					MaxFrictionTorque = 1,
 
 					LimitsEnabled = true,
 					UpperAngle = 160,
@@ -94,7 +93,6 @@ local RAGDOLL_SETTINGS = {
 			["ConstraintSettings"] = {
 				["Hip"] = {
 					Attachment1 = "Torso>Hip",
-					MaxFrictionTorque = 1,
 
 					LimitsEnabled = true,
 					UpperAngle = 160,
@@ -244,12 +242,13 @@ function Ragdoll.SetupCharacter(character: Model, motors: Array, pointOfContact:
 
 			local localRandomVelocity = Vector3.new(
 				getRandomVelocityNumber(random, walkSpeed * randomness),
-				getRandomVelocityNumber(random, walkSpeed * (randomness / 2)),
+				getRandomVelocityNumber(random, walkSpeed * (randomness / 4)),
 				getRandomVelocityNumber(random, walkSpeed * randomness)
 			)
 			local worldRandomVelocity = humanoidRootPart.CFrame:VectorToWorldSpace(localRandomVelocity)
 			local velocity = bodyPart.Velocity
-			bodyPart.Velocity = velocity + (worldRandomVelocity * math.max(worldRandomVelocity.Magnitude - velocity.Magnitude * 1.5, 0))
+
+			bodyPart.Velocity = velocity + (worldRandomVelocity - velocity)
 		end
 	end
 end
