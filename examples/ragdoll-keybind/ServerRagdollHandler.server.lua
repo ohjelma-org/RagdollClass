@@ -1,9 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RagdollClass = require(ReplicatedStorage:WaitForChild("RagdollClass"))
 
-local toggleRagdoll = Instance.new("RemoteEvent")
-toggleRagdoll.Name = "ToggleRagdoll"
-toggleRagdoll.Parent = ReplicatedStorage
+local toggleRagdoll = ReplicatedStorage:FindFirstChild("path.to.event");
 
 local ragdolls = {}
 toggleRagdoll.OnServerEvent:Connect(function(player)
