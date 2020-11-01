@@ -8,9 +8,7 @@ local Ragdoll = {}
 local RunService = game:GetService("RunService")
 
 local RAGDOLL_SETTINGS = {
-	[Enum.HumanoidRigType.R15] = {
-
-	},
+	[Enum.HumanoidRigType.R15] = {},
 
 	[Enum.HumanoidRigType.R6] = {
 		["Head"] = {
