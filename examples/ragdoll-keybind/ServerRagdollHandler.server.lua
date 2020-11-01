@@ -3,7 +3,7 @@ local RagdollClass = require(ReplicatedStorage:WaitForChild("RagdollClass"))
 
 local toggleRagdoll = Instance.new("RemoteEvent")
 toggleRagdoll.Name = "ToggleRagdoll"
-toggleRagdoll.Parent = RagdollClass
+toggleRagdoll.Parent = ReplicatedStorage
 
 local ragdolls = {}
 toggleRagdoll.OnServerEvent:Connect(function(player)
