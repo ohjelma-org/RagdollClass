@@ -8,7 +8,7 @@ local remoteEvent
 
 local Ragdoll = require(script.Parent.Ragdoll)
 
-function Replication.OnClientEvent(enabled: boolean, character: Model, motors: Array, pointOfContact: CFrame)
+function Replication.OnClientEvent(enabled: boolean, character: Model, motors: Array, pointOfContact: CFrame, randomness: number)
 	local clientCharacter = client.Character
 	if not clientCharacter then
 		return
@@ -20,7 +20,7 @@ function Replication.OnClientEvent(enabled: boolean, character: Model, motors: A
 	end
 
 	if enabled then
-		Ragdoll.SetupCharacter(character, motors, pointOfContact)
+		Ragdoll.SetupCharacter(character, motors, pointOfContact, randomness)
 	else
 		Ragdoll.ResetCharacter(character)
 	end

@@ -167,7 +167,7 @@ local function getRandomVelocityNumber(random: Random, maxVelocity: number)
 	return random:NextNumber(maxVelocity / 3, maxVelocity) * (random:NextInteger(0, 1) == 0 and -1 or 1)
 end
 
-function Ragdoll.SetupCharacter(character: Model, motors: Array, pointOfContact: CFrame)
+function Ragdoll.SetupCharacter(character: Model, motors: Array, pointOfContact: CFrame, randomness: number)
 	local humanoid = character:FindFirstChildWhichIsA("Humanoid")
 	if not humanoid then
 		return
@@ -229,8 +229,6 @@ function Ragdoll.SetupCharacter(character: Model, motors: Array, pointOfContact:
 
 		vectorForce.Parent = closestLimb
 		attachment.Parent = closestLimb
-
-		torso.Velocity = -pointOfContact.LookVector * 10
 		delay(0.1, function()
 			attachment:Destroy()
 			vectorForce:Destroy()
@@ -245,13 +243,13 @@ function Ragdoll.SetupCharacter(character: Model, motors: Array, pointOfContact:
 			end
 
 			local localRandomVelocity = Vector3.new(
-				getRandomVelocityNumber(random, walkSpeed / 5),
-				getRandomVelocityNumber(random, walkSpeed / 8),
-				getRandomVelocityNumber(random, walkSpeed / 5)
+				getRandomVelocityNumber(random, walkSpeed * randomness),
+				getRandomVelocityNumber(random, walkSpeed * (randomness / 2)),
+				getRandomVelocityNumber(random, walkSpeed * randomness)
 			)
 			local worldRandomVelocity = humanoidRootPart.CFrame:VectorToWorldSpace(localRandomVelocity)
 			local velocity = bodyPart.Velocity
-			bodyPart.Velocity = bodyPart.Velocity + (worldRandomVelocity * math.max(worldRandomVelocity.Magnitude - velocity.Magnitude, 0))
+			bodyPart.Velocity = velocity + (worldRandomVelocity * math.max(worldRandomVelocity.Magnitude - velocity.Magnitude * 1.5, 0))
 		end
 	end
 end
@@ -395,8 +393,16 @@ end
 
 function Ragdoll.RemoveRagdollConstraints(folder: Folder)
 	for _, constraint in pairs(folder:GetChildren()) do
-		constraint.Attachment0:Destroy()
-		constraint.Attachment1:Destroy()
+		local attachment0 = constraint.Attachment0
+		local attachment1 = constraint.Attachment1
+
+		if attachment0 then
+			attachment0:Destroy()
+		end
+
+		if attachment1 then
+			attachment1:Destroy()
+		end
 	end
 
 	folder:Destroy()
