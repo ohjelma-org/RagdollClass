@@ -15,7 +15,7 @@ local Replication = require(script.Replication)
 local Maid = require(script.Maid)
 
 -- @@ Class Constructors
-function RagdollClass.new(character: Model)
+function RagdollClass.new(character: Model, randomness: number)
 	assert(RunService:IsServer(), "RagdollClass can only be used from the server")
 	local self = setmetatable({
 		-- @@ Public Members
@@ -26,6 +26,7 @@ function RagdollClass.new(character: Model)
 		humanoidRootPart = nil,
 		humanoid = nil,
 
+		randomness = randomness or 0.25,
 		maid = Maid.new(),
 	}, RagdollClass)
 	self:setup()
@@ -54,6 +55,7 @@ function RagdollClass:Enable(pointOfContact: CFrame)
 	local character = self.Character
 	local humanoidRootPart = self.humanoidRootPart
 	local humanoid = self.humanoid
+	local randomness = self.randomness
 
 	assert(humanoidRootPart:CanSetNetworkOwnership(), "must be able to set HumanoidRootPart network ownership auto")
 	local requiresNeck = humanoid.RequiresNeck
@@ -66,10 +68,10 @@ function RagdollClass:Enable(pointOfContact: CFrame)
 	local networkOwnershipAuto = humanoidRootPart:GetNetworkOwnershipAuto()
 	if player then
 		humanoidRootPart:SetNetworkOwner(player)
-		Replication.Fire(player, true, character, motors, pointOfContact)
+		Replication.Fire(player, true, character, motors, pointOfContact, randomness)
 	else
 		humanoidRootPart:SetNetworkOwner(nil)
-		Ragdoll.SetupHumanoid(humanoid, motors, pointOfContact)
+		Ragdoll.SetupCharacter(character, motors, pointOfContact, randomness)
 	end
 
 	self.maid:GiveTask(function()
@@ -78,7 +80,7 @@ function RagdollClass:Enable(pointOfContact: CFrame)
 		if player then
 			Replication.Fire(player, false, character)
 		else
-			Ragdoll.ResetHumanoid(humanoid)
+			Ragdoll.ResetCharacter(character)
 		end
 
 		if humanoidRootPart:CanSetNetworkOwnership() then
