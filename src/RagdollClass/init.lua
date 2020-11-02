@@ -26,7 +26,7 @@ function RagdollClass.new(character: Model, randomness: number)
 		humanoidRootPart = nil,
 		humanoid = nil,
 
-		randomness = randomness or 0.25,
+		randomness = randomness or 0.5,
 		maid = Maid.new(),
 	}, RagdollClass)
 	self:setup()
