@@ -186,9 +186,34 @@ function Ragdoll.SetupCharacter(character: Model, motors: Array, pointOfContact:
 	humanoid:ChangeState(Enum.HumanoidStateType.Physics)
 
 	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-	local torso = character:FindFirstChild("Torso")
+	local torso = character:FindFirstChild("Torso") or character:FindFirstChild("LowerTorso")
 	if not humanoidRootPart then
 		return
+	end
+
+	-- Reduce the friction of the limbs that are in contact with the ground, as otherwise there's a somewhat big chance the character is gonna stay standing up.
+	local rightLeg = character:FindFirstChild("Right Leg") or character:FindFirstChild("RightFoot")
+	local leftLeg = character:FindFirstChild("Left Leg") or character:FindFirstChild("LeftFoot")
+	if rightLeg then
+		local currentPhysicalProperties = PhysicalProperties.new(rightLeg.Material)
+		rightLeg.CustomPhysicalProperties = PhysicalProperties.new(
+			currentPhysicalProperties.Density,
+			0,
+			currentPhysicalProperties.Elasticity,
+			100,
+			currentPhysicalProperties.ElasticityWeight
+		)
+	end
+
+	if leftLeg then
+		local currentPhysicalProperties = PhysicalProperties.new(leftLeg.Material)
+		leftLeg.CustomPhysicalProperties = PhysicalProperties.new(
+			currentPhysicalProperties.Density,
+			0,
+			currentPhysicalProperties.Elasticity,
+			100,
+			currentPhysicalProperties.ElasticityWeight
+		)
 	end
 
 	if pointOfContact and torso then
@@ -261,6 +286,16 @@ function Ragdoll.ResetCharacter(character: Model)
 
 	humanoid.AutoRotate = true
 	humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+
+	local rightLeg = character:FindFirstChild("Right Leg") or character:FindFirstChild("RightFoot")
+	local leftLeg = character:FindFirstChild("Left Leg") or character:FindFirstChild("LeftFoot")
+	if rightLeg then
+		rightLeg.CustomPhysicalProperties = PhysicalProperties.new(rightLeg.Material)
+	end
+
+	if leftLeg then
+		leftLeg.CustomPhysicalProperties = PhysicalProperties.new(leftLeg.Material)
+	end
 end
 
 function Ragdoll.CreateRagdollConstraints(character: Model, humanoid: Humanoid)
