@@ -165,18 +165,20 @@ local function getRandomVelocityNumber(random: Random, maxVelocity: number)
 	return random:NextNumber(maxVelocity / 3, maxVelocity) * (random:NextInteger(0, 1) == 0 and -1 or 1)
 end
 
-function Ragdoll.SetupCharacter(character: Model, motors: Array, pointOfContact: CFrame, randomness: number)
+function Ragdoll.SetupCharacter(character: Model, pointOfContact: CFrame | nil, randomness: number)
 	local humanoid = character:FindFirstChildWhichIsA("Humanoid")
 	if not humanoid then
 		return
 	end
+
+	local motors = Ragdoll.DisableMotors(character)
 
 	local animator = humanoid:FindFirstChildWhichIsA("Animator")
 	if animator then
 		animator:ApplyJointVelocities(motors)
 	end
 
-	for _, animationTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+	for _, animationTrack in pairs(animator:GetPlayingAnimationTracks()) do
 		-- I'm using a thousandth of the second instead of 0 because there's a bug where if it is 0 it freezes poses?
 		-- Read the developer hub for more information: https://developer.roblox.com/en-us/api-reference/function/AnimationTrack/Stop
 		animationTrack:Stop(0.001)
@@ -276,13 +278,16 @@ function Ragdoll.SetupCharacter(character: Model, motors: Array, pointOfContact:
 			bodyPart.Velocity = velocity + (worldRandomVelocity - velocity)
 		end
 	end
+	return motors
 end
 
-function Ragdoll.ResetCharacter(character: Model)
+function Ragdoll.ResetCharacter(character: Model, motors: Array)
 	local humanoid = character:FindFirstChildWhichIsA("Humanoid")
 	if not humanoid then
 		return
 	end
+
+	Ragdoll.EnableMotors(motors)
 
 	humanoid.AutoRotate = true
 	humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)

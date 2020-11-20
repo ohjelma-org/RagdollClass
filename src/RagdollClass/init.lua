@@ -62,25 +62,25 @@ function RagdollClass:Enable(pointOfContact: CFrame)
 	humanoid.RequiresNeck = false
 
 	local ragdollConstraints = Ragdoll.CreateRagdollConstraints(character, humanoid)
-	local motors = Ragdoll.DisableMotors(character)
+	local motors
 
 	local networkOwner = humanoidRootPart:GetNetworkOwner()
 	local networkOwnershipAuto = humanoidRootPart:GetNetworkOwnershipAuto()
 	if player then
 		humanoidRootPart:SetNetworkOwner(player)
-		Replication.Fire(player, true, character, motors, pointOfContact, randomness)
+		motors = Replication.Fire(player, true, character, nil, pointOfContact, randomness)
 	else
 		humanoidRootPart:SetNetworkOwner(nil)
-		Ragdoll.SetupCharacter(character, motors, pointOfContact, randomness)
+		motors = Ragdoll.SetupCharacter(character, pointOfContact, randomness)
 	end
 
 	self.maid:GiveTask(function()
-		Ragdoll.EnableMotors(motors)
 		Ragdoll.RemoveRagdollConstraints(ragdollConstraints)
+		Ragdoll.EnableMotors(motors)
 		if player then
-			Replication.Fire(player, false, character)
+			Replication.Fire(player, false, character, motors)
 		else
-			Ragdoll.ResetCharacter(character)
+			Ragdoll.ResetCharacter(character, motors)
 		end
 
 		if humanoidRootPart:CanSetNetworkOwnership() then
