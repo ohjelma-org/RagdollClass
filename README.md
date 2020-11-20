@@ -3,6 +3,7 @@
 
 ## Installation
  Install [Git](https://git-scm.com/downloads) from their website.
+ <br>
  Install [rojo.exe](https://github.com/rojo-rbx/rojo/releases) from Rojo's releases page.
 
  ```
