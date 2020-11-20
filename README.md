@@ -1,6 +1,19 @@
 # RagdollClass
  RagdollClass is a simple R6 ragdoll.
 
+## Installation
+ Install [Git](https://git-scm.com/downloads) from their website.
+ <br>
+ Install [rojo.exe](https://github.com/rojo-rbx/rojo/releases) from Rojo's releases page.
+
+ ```
+ $ git clone https://github.com/ohjelma-org/RagdollClass.git
+ cd path_to_folder
+ rojo serve
+ ```
+
+ You can learn how to add rojo.exe to path through this [article](https://medium.com/roblox-development/setting-up-roblox-development-with-rojo-git-sublime-text-3-and-luacheck-from-scratch-fb2ad65c7fa7).
+
 ## Documentation
  To be able to use it, 
  you need to require it from the client one time so it can setup the replication, which after you can start constructing RagdollClasses in the server-side.
