@@ -8,8 +8,8 @@
 
  ```
  $ git clone https://github.com/ohjelma-org/RagdollClass.git
- cd path_to_folder
- rojo serve
+ $ cd path_to_folder
+ $ rojo serve
  ```
 
  You can learn how to add rojo.exe to path through this [article](https://medium.com/roblox-development/setting-up-roblox-development-with-rojo-git-sublime-text-3-and-luacheck-from-scratch-fb2ad65c7fa7).
