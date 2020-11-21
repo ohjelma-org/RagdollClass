@@ -6,10 +6,10 @@
  <br>
  Install [rojo.exe](https://github.com/rojo-rbx/rojo/releases) from Rojo's releases page.
 
- ```
+ ```bash
  $ git clone https://github.com/ohjelma-org/RagdollClass.git
- cd path_to_folder
- rojo serve
+ $ cd path_to_folder
+ $ rojo serve
  ```
 
  You can learn how to add rojo.exe to path through this [article](https://medium.com/roblox-development/setting-up-roblox-development-with-rojo-git-sublime-text-3-and-luacheck-from-scratch-fb2ad65c7fa7).
@@ -24,7 +24,7 @@
    Randomness value determines how random the ragdoll is. The recommended value is between 0 and 1, however you are free to go as far high up as you want.
 
  ### Methods
-  ``Ragdoll:Enable(PointOfContact: Vector3)``
+  ``Ragdoll:Enable(PointOfContact: CFrame)``
    Enables the ragdoll. There is an optional point of contact parameter, which will make the ragdoll revolve around it if provided.
 
   ``Ragdoll:Disable()``
