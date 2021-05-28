@@ -459,7 +459,7 @@ function Ragdoll.DisableMotors(character: Model)
 	for _, motor in pairs(character:GetDescendants()) do
 		if motor:IsA("Motor6D") and motor.Part0 ~= humanoidRootPart then
 			motor.Enabled = false
-			motors[#motors + 1] = motor
+			table.insert(motors, motor)
 		end
 	end
 	return motors
