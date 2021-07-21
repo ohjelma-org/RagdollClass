@@ -1,0 +1,8 @@
+[package]
+name = "Ohjelma/RagdollClass"
+version = "0.0.1"
+author = "guidable"
+content_root = "src/RagdollClass"
+license = "MIT"
+
+# No need for dependencies since it gets required inside the module.
